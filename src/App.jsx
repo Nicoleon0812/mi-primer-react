@@ -4,6 +4,7 @@ import Contador from "./Contador"
 import Espejo from "./Espejo"
 import Convertidor from "./Convertidor"
 import ListaMaterias from "../ListaMaterias"
+import Calendario from "./Calendario"
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
       <Contador/>
       <Espejo/>
       <Convertidor/>
-      <ListaMaterias/>
+     {/* <ListaMaterias/> */} 
+      <Calendario/>
     </div>
   )
 }
