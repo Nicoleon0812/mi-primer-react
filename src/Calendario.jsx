@@ -11,7 +11,7 @@ function Calendario() {
     } else {
         return [
           { id: 1, nombre: "Cálculo I", profesor: "Samantha", dia: "Lunes", hora: "08:30" },
-          { id: 6, nombre: "Teoría de Números", profesor: "Hetor", dia: "Lunes", hora: "09:00"},
+          { id: 6, nombre: "Teoría de Números", profesor: "Hector", dia: "Lunes", hora: "09:00"},
           { id: 2, nombre: "Prog. Web", profesor: "Nicolás", dia: "Lunes", hora: "10:30" },
           { id: 3, nombre: "Base de Datos", profesor: "Pedro", dia: "Martes", hora: "08:30" },
           { id: 4, nombre: "Inglés", profesor: "Ana", dia: "Jueves", hora: "14:30" },
