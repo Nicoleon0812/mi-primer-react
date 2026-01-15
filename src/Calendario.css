@@ -1,0 +1,129 @@
+/* src/Calendario.css */
+
+/* --- 1. ESTRUCTURA PRINCIPAL --- */
+.grilla-calendario {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+/* Responsivo: Celulares */
+@media (max-width: 768px) {
+  .grilla-calendario {
+    grid-template-columns: 1fr; /* Todo en 1 columna */
+  }
+  
+  .formulario-container {
+    flex-direction: column; /* Formulario vertical en celular */
+  }
+  
+  .input-form, .btn-agregar {
+    width: 100%; /* Que ocupen todo el ancho */
+  }
+}
+
+/* --- 2. TARJETAS DE DÍA (COLUMNAS) --- */
+.columna-dia {
+  background-color: #1a202c; /* Gris oscuro */
+  padding: 15px;
+  border-radius: 12px;
+  min-height: 250px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #2d3748;
+}
+
+.columna-dia:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+  border-color: #4a5568;
+}
+
+.titulo-dia {
+  color: #ed8936; /* Naranja */
+  text-align: center;
+  border-bottom: 2px solid #2d3748;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- 3. FORMULARIO (PANEL DE CONTROL) --- */
+.formulario-container {
+  background-color: #171923; /* Casi negro */
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #2d3748;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.input-form {
+  background-color: #2d3748;
+  border: 1px solid #4a5568;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.input-form:focus {
+  border-color: #63b3ed; /* Azul al escribir */
+  background-color: #2a4365;
+}
+
+.input-form::placeholder {
+  color: #a0aec0;
+}
+
+/* --- 4. BOTONES --- */
+.btn-agregar {
+  padding: 12px 25px;
+  background-color: #48bb78; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-agregar:hover {
+  background-color: #38a169; /* Verde más oscuro */
+}
+
+.btn-eliminar {
+  margin-top: 10px;
+  background-color: #e53e3e; /* Rojo suave */
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.btn-eliminar:hover {
+  opacity: 1;
+}
+
+/* --- 5. TARJETA DE MATERIA INDIVIDUAL --- */
+.tarjeta-materia {
+  background-color: #2d3748;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #63b3ed;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
