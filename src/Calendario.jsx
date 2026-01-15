@@ -91,13 +91,24 @@ function Calendario() {
           {diasSemana.map(dia => <option key={dia} value={dia}>{dia}</option>)}
         </select>
 
-        <input 
-          type="time" 
-          className="input-form"
-          placeholder="Hora"
-          value={nuevaHora}
-          onChange={(e) => setNuevaHora(e.target.value)}
-        />
+        <div className="input-wrapper">
+          
+          <input 
+            type="time" 
+            className="input-form"
+            value={nuevaHora}
+            onChange={(e) => setNuevaHora(e.target.value)}
+            style={{ width: '100%' }} // Aseguramos que llene el wrapper
+          />
+
+          {/* Renderizado Condicional: Solo mostramos el texto si NO hay hora seleccionada */}
+          {!nuevaHora && (
+            <span className="placeholder-fantasma">
+              Hora de clase 
+            </span>
+          )}
+
+        </div>
 
         <button 
           className="btn-agregar"

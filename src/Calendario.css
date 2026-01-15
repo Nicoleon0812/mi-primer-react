@@ -127,3 +127,45 @@
   margin-bottom: 15px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
+/* src/Calendario.css */
+
+/* src/Calendario.css */
+
+/* --- CONTENEDOR DE HORA ROBUSTO --- */
+.input-wrapper {
+  position: relative;
+  display: flex; /* Alineación perfecta */
+  align-items: center;
+  
+  /* REGLA DE ORO: En PC, nunca medir menos de 150px para que quepa el texto */
+  min-width: 150px; 
+  height: 42px; /* Misma altura que los otros inputs para que no baile */
+}
+
+/* El texto "fantasma" que hace de etiqueta */
+.placeholder-fantasma {
+  position: absolute;
+  left: 10px; /* Separación interna */
+  top: 50%;
+  transform: translateY(-50%); /* Centrado vertical matemático */
+  
+  background-color: #2d3748; /* Color del fondo para tapar el "--:--" */
+  color: #a0aec0;
+  
+  /* CANDADOS DE SEGURIDAD */
+  pointer-events: none;      /* El clic lo atraviesa */
+  white-space: nowrap;       /* PROHIBIDO saltar de línea */
+  z-index: 10;               /* Siempre encima del input */
+  
+  padding: 0 5px;
+  font-size: 14px;
+}
+
+/* RESPONSIVE: En celular, que ocupe todo el ancho */
+@media (max-width: 768px) {
+  .input-wrapper {
+    width: 100%;
+    margin-bottom: 10px; /* Un poco de aire abajo en celular */
+  }
+}
