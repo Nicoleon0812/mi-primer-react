@@ -94,6 +94,7 @@ function Calendario() {
         <input 
           type="time" 
           className="input-form"
+          placeholder="Hora"
           value={nuevaHora}
           onChange={(e) => setNuevaHora(e.target.value)}
         />
