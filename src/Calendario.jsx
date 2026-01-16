@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import './Calendario.css' // Asegúrate de importar el CSS
+import './Calendario.css'
 
 function Calendario() {
   
-  // 1. ESTADO DE MATERIAS (Con carga perezosa desde localStorage)
+  // 1. ESTADO DE MATERIAS
   const [materias, setMaterias] = useState(() => {
     const guardado = localStorage.getItem("horario")
     if (guardado) {
@@ -11,7 +11,7 @@ function Calendario() {
     } else {
         return [
           { id: 1, nombre: "Cálculo I", profesor: "Samantha", dia: "Lunes", hora: "08:30" },
-          { id: 6, nombre: "Teoría de Números", profesor: "Hector", dia: "Lunes", hora: "09:00"},
+          { id: 6, nombre: "Teoría de Números", profesor: "Hetor", dia: "Lunes", hora: "09:00"},
           { id: 2, nombre: "Prog. Web", profesor: "Nicolás", dia: "Lunes", hora: "10:30" },
           { id: 3, nombre: "Base de Datos", profesor: "Pedro", dia: "Martes", hora: "08:30" },
           { id: 4, nombre: "Inglés", profesor: "Ana", dia: "Jueves", hora: "14:30" },
@@ -20,7 +20,7 @@ function Calendario() {
     }
   })
 
-  // 2. EFECTO: Guardar en localStorage cada vez que cambien las materias
+  // 2. EFECTO: Guardar en localStorage
   useEffect(() => {
     localStorage.setItem("horario", JSON.stringify(materias))
   }, [materias])
@@ -33,7 +33,7 @@ function Calendario() {
 
   const diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
 
-  // --- FUNCIONES ---
+  // --- FUNCIONES LÓGICAS ---
 
   const eliminarMateria = (idParaBorrar) => {
     const nuevasMaterias = materias.filter( materia => materia.id !== idParaBorrar )
@@ -52,20 +52,34 @@ function Calendario() {
     }
 
     setMaterias([...materias, nuevaMateria])
-
-    // Limpiar formulario
+    
+    // Limpiar campos
     setNuevoNombre("")
     setNuevoProfe("")
     setNuevaHora("")
   }
 
-  // --- RENDERIZADO (Aquí estaba el error) ---
+  // --- NUEVO: LÓGICA DE COLORES INTELIGENTES ---
+  const obtenerColor = (nombreMateria) => {
+    if (!nombreMateria) return "#a0aec0" // Protección por si viene vacío
+    const nombre = nombreMateria.toLowerCase()
+
+    if (nombre.includes("cálculo") || nombre.includes("matemática")) return "#63b3ed" // Azul
+    if (nombre.includes("prog") || nombre.includes("web") || nombre.includes("computación")) return "#48bb78" // Verde
+    if (nombre.includes("base de datos") || nombre.includes("datos")) return "#ed8936" // Naranja
+    if (nombre.includes("inglés") || nombre.includes("idioma")) return "#f56565" // Rojo
+    if (nombre.includes("física") || nombre.includes("ciencia")) return "#9f7aea" // Morado
+    
+    return "#a0aec0" // Gris por defecto
+  }
+
+  // --- RENDERIZADO ---
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       
       <h2 style={{ textAlign: 'center', color: 'white' }}>📅 Mi Horario Académico</h2>
       
-      {/* 1. FORMULARIO */}
+      {/* FORMULARIO */}
       <div className="formulario-container">
         
         <input 
@@ -82,7 +96,6 @@ function Calendario() {
           onChange={(e) => setNuevoProfe(e.target.value)}
         />
 
-        {/* CORRECCIÓN: Quitamos el closing tag /> y dejamos > */}
         <select 
           className="input-form"
           value={nuevoDia} 
@@ -91,55 +104,47 @@ function Calendario() {
           {diasSemana.map(dia => <option key={dia} value={dia}>{dia}</option>)}
         </select>
 
+        {/* Input de Hora Blindado */}
         <div className="input-wrapper">
-          
           <input 
             type="time" 
             className="input-form"
+            style={{ width: '100%', height: '100%' }}
             value={nuevaHora}
             onChange={(e) => setNuevaHora(e.target.value)}
-            style={{ width: '100%' }} // Aseguramos que llene el wrapper
           />
-
-          {/* Renderizado Condicional: Solo mostramos el texto si NO hay hora seleccionada */}
           {!nuevaHora && (
-            <span className="placeholder-fantasma">
-              Hora de clase 
-            </span>
+            <span className="placeholder-fantasma">Hora de clase</span>
           )}
-
         </div>
 
-        <button 
-          className="btn-agregar"
-          onClick={agregarMateria}
-        >
+        <button className="btn-agregar" onClick={agregarMateria}>
           + Agregar Clase
         </button>
 
       </div>
 
-      {/* 2. LA GRILLA (Ahora sí está dentro del return) */}
+      {/* GRILLA CALENDARIO */}
       <div className="grilla-calendario">
         
         {diasSemana.map((dia) => { 
-
-          // Filtros y Ordenamiento
+          // Filtrar y Ordenar
           const clasesDelDia = materias.filter(materia => materia.dia === dia)
-          
-          clasesDelDia.sort((a, b) => {
-            return a.hora.padStart(5,'0').localeCompare(b.hora.padStart(5, '0'))
-          })
+          clasesDelDia.sort((a, b) => a.hora.padStart(5,'0').localeCompare(b.hora.padStart(5, '0')))
 
           return (
             <div key={dia} className="columna-dia">
-              
               <h3 className="titulo-dia">{dia}</h3>
 
               {clasesDelDia.length > 0 ? (
-                
                 clasesDelDia.map((materia) => (
-                    <div key={materia.id} className="tarjeta-materia">
+                    
+                    // AQUI ESTÁ EL CAMBIO DE COLOR
+                    <div 
+                      key={materia.id} 
+                      className="tarjeta-materia"
+                      style={{ borderLeft: `5px solid ${obtenerColor(materia.nombre)}` }}
+                    >
                       <h4 style={{ color: '#fff', margin: 0 }}>{materia.nombre}</h4>
                       
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginTop: '5px', color: '#cbd5e0' }}>
@@ -153,8 +158,8 @@ function Calendario() {
                           Eliminar
                       </button>
                     </div>
-                ))
 
+                ))
               ) : (
                 <div style={{ textAlign: 'center', color: 'gray', marginTop: '20px', fontStyle: 'italic' }}>
                    💤 Día Libre
@@ -165,9 +170,8 @@ function Calendario() {
           )
         })}
 
-      </div> {/* Fin de la grilla */}
-
-    </div> // Fin del contenedor principal
+      </div>
+    </div>
   )
 }
 
